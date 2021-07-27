@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Etch-A-Sketch</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: beige;
+    }
+    #grid {
+        display: grid;
+    }
+</style>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <h1 style="text-align: center;" class="mt-5">Etch-a-Sketch</h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 mt-5">
+            <h1 style="text-align: center;">Click the button below to reset</h1>
+            <div class="d-grid col-6 mx-auto">
+                <button id="reset" class="btn btn-primary mt-5" onclick="resetFunction()">Reset</button>
+            </div>
+        </div>
+        <div class="col-lg-8 mt-5" style="display: flex; justify-content: center;">
+            <div id="grid">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function resetFunction() {
+        let c = document.getElementById("grid").children;
+        for(let i=0; i<c.length; i++){
+            c[i].style.backgroundColor = "white";
+        }
+    }
+    function gridSizeObtainer(){
+        let size = prompt("Enter the size of the grid");
+        return size;
+    }
+    function mainLogic(size) {
+        let squareSize = '10px ';
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
+                let container = document.getElementById("grid");
+                document.getElementById("grid").style.cssText = `
+                grid-template-columns: ${squareSize.repeat(size)};
+                grid-template-rows: ${squareSize.repeat(size)};
+            `;
+                let cell = document.createElement("div");
+                cell.setAttribute('style', 'border: 1px solid #000000; background-color: white; color: white;');
+                cell.innerHTML = "&nbsp";
+                cell.addEventListener("mouseenter", function (event) {
+                    event.target.style.backgroundColor = "black";
+                    event.target.style.color = "black";
+                }, false);
+                container.appendChild(cell);
+            }
+        }
+    }
+    let gridSize = gridSizeObtainer();
+    if(gridSize<=64) {
+        mainLogic(gridSize);
+    } else {
+        alert("Please specify the size of the grid up to 64");
+    }
+</script>
+</body>
+</html>
